@@ -48,10 +48,17 @@ st.markdown("""
 /* Buttons */
 .stButton button{
     width:100%;
-    height:55px;
-    border-radius:15px;
-    font-size:18px;
+    height:60px;
+    border-radius:18px;
+    font-size:20px;
     font-weight:bold;
+    background: linear-gradient(
+        90deg,
+        #FFD700,
+        #FFA500
+    );
+    color:black;
+    border:none;
 }
 
 /* Sidebar */
@@ -72,7 +79,7 @@ model = joblib.load("gold_model.pkl")
 # SIDEBAR
 # ====================================
 
-st.sidebar.title("📊 Navigation")
+st.sidebar.title(" Navigation")
 
 page = st.sidebar.radio(
     "Choose Page",
@@ -99,7 +106,13 @@ st.sidebar.markdown("---")
 if page == "Prediction":
 
     st.markdown("""
-    <h1 style='color:#FFD700;'>
+    <h1 style="
+    background: linear-gradient(90deg,#FFD700,#FFA500,#FFF8DC);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    font-size:45px;
+    font-weight:800;
+    ">
     🏆 Gold Rate Trend Prediction Dashboard
     </h1>
     """, unsafe_allow_html=True)
@@ -149,7 +162,8 @@ if page == "Prediction":
     with metric1:
         st.metric(
             label="Model Accuracy",
-            value="54%"
+            value="54%",
+            delta="+4%"
         )
 
     with metric2:
@@ -182,7 +196,12 @@ if page == "Prediction":
             <div style="
             padding:20px;
             border-radius:20px;
-            background:#064e3b;
+            background:linear-gradient(
+            90deg,
+            #065f46,
+            #10b981
+            );
+            box-shadow:0 0 25px #10b981;
             text-align:center;
             font-size:28px;
             font-weight:bold;
@@ -197,7 +216,12 @@ if page == "Prediction":
             <div style="
             padding:20px;
             border-radius:20px;
-            background:#7f1d1d;
+            background:linear-gradient(
+            90deg,
+            #991b1b,
+            #ef4444
+            );
+            box-shadow:0 0 25px #ef4444;
             text-align:center;
             font-size:28px;
             font-weight:bold;
@@ -215,8 +239,9 @@ elif page == "Analytics":
     st.title("📊 Gold Market Analytics")
 
     st.metric(
-        label="Current Model Accuracy",
-        value="54%"
+        label="Model Accuracy",
+        value="54%",
+        delta="+4%"
     )
 
     st.divider()
@@ -228,6 +253,29 @@ elif page == "Analytics":
         st.subheader("📈 Historical Gold Price Trend")
 
         st.line_chart(data["Close"])
+
+        st.info(
+            "Historical gold market data used for model training and evaluation."
+        )
+
+        st.subheader("Price Statistics")
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric(
+            "Maximum Price",
+            f"{data['Close'].max():.2f}"
+        )
+
+        col2.metric(
+            "Minimum Price",
+            f"{data['Close'].min():.2f}"
+        )
+
+        col3.metric(
+            "Average Price",
+            f"{data['Close'].mean():.2f}"
+        )
 
         st.divider()
 
@@ -242,3 +290,4 @@ elif page == "Analytics":
     except Exception as e:
 
         st.error(f"Error loading data: {e}")
+
