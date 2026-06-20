@@ -1,4 +1,6 @@
 import pandas as pd
+import joblib
+
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -48,3 +50,8 @@ print("\nConfusion Matrix:")
 print(cm)
 
 print("\nProject executed successfully!")
+
+
+joblib.dump(model, "gold_model.pkl")
+
+print("Model saved successfully!")
